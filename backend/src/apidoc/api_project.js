@@ -1,0 +1,1 @@
+define({  "name": "novelist-backend",  "version": "0.0.0",  "description": "Back-end for the Novelist project.",  "sampleUrl": false,  "defaultVersion": "0.0.0",  "apidoc": "0.3.0",  "generator": {    "name": "apidoc",    "time": "2017-04-05T03:28:16.657Z",    "url": "http://apidocjs.com",    "version": "0.17.5"  }});

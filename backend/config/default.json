@@ -1,0 +1,7 @@
+{
+  "port": 8000,
+  "dbPort": 27017,
+  "dbUrl": "localhost",
+  "jwtSecret": "novelist_secret",
+  "passSecret": "novelist_passwords"
+}
