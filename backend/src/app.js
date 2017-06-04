@@ -4,13 +4,21 @@
  */
 
 import Koa from 'koa'
+import convert from 'koa-convert'
 import Router from 'koa-router'
 import bodyParser from 'koa-bodyparser'
+
 import mongoose from 'mongoose'
+
 import config from 'config'
 
-import db from './domain'
+import jwt from 'koa-jwt'
 import { login, signup } from './auth'
+
+import db from './domain'
+
+import graphqlhttp from 'koa-graphql'
+import Schema from './graphql'
 
 const app = new Koa()
 const health = new Router()
@@ -20,7 +28,7 @@ const protected_ = new Router()
 mongoose.Promise = global.Promise
 mongoose.connect(`${config.dbUrl}:${config.dbPort}`)
 
-app.use(bodyParser());
+app.use(bodyParser())
 
 /**
  * @api {get} / health
@@ -60,6 +68,15 @@ public_
     '/login',
     login,
   )
+  .all(
+    '/__graphql',
+    convert(
+      graphqlhttp({
+        schema: Schema,
+        graphiql: true,
+      })
+    )
+  )
   /**
    * @api {post} /signup signup
    * @apiGroup Auth
@@ -86,8 +103,35 @@ public_
     signup,
   )
 
+protected_
+  .get(
+    '/me',
+    (ctx) => {
+      console.log(ctx.state.user)
+      const {
+        user
+      } = ctx.state
+      ctx.body = {
+        ...user,
+        password: '',
+        roles: '',
+      }
+    }
+  )
+  .all(
+    '/graphql',
+    convert(
+      graphqlhttp({
+        schema: Schema,
+        graphiql: true,
+      })
+    )
+  )
+
 app.use(health.routes())
 app.use(public_.routes())
+app.use(jwt({ secret: config.jwtSecret }))
+
 app.use(protected_.routes())
 
 app.listen(config.port, () => {

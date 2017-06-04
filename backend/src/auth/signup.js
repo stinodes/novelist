@@ -22,7 +22,7 @@ export default async (ctx) => {
   }
   else if ( await db.User.findOne({ email, }) ) {
     ctx.status = 400
-    ctx.body = { message: 'Email already takeb.' }
+    ctx.body = { message: 'Email already taken.' }
   }
   else {
     const userBody = {
@@ -32,6 +32,7 @@ export default async (ctx) => {
       },
       user = await new db.User(userBody).save(),
       token = jwt(user)
+    console.log(user)
     ctx.status = 201
     ctx.body = { token }
   }

@@ -204,8 +204,8 @@ require([
     });
 
     /**
-     * Add navigation items by analyzing the HTML content and searching for h1 and h2 tags
-     * @param nav Object the navigation array
+     * Add js.navigation items by analyzing the HTML content and searching for h1 and h2 tags
+     * @param nav Object the js.navigation array
      * @param content string the compiled HTML content
      * @param index where to insert items
      * @return boolean true if any good-looking (i.e. with a group identifier) <h1> tag was found
@@ -640,7 +640,7 @@ require([
             // Event on.click re-assign
             $content.find('.versions li.version a').on('click', changeVersionCompareTo);
 
-            // select navigation
+            // select js.navigation
             $('#sidenav li[data-group=\'' + group + '\'][data-name=\'' + name + '\'][data-version=\'' + currentVersion + '\']').addClass('has-modifications');
 
             $root.remove();
