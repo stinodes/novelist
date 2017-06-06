@@ -4,14 +4,15 @@
   "description": "Web interface for novelist project",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server",
-    "prod": "webpack-dev-server -p",
+    "start": "webpack-dev-server --public 192.168.1.99:3000",
+    "prod": "webpack-dev-server -p --public 192.168.1.99:3000",
     "build": "NODE_ENV=production webpack -p",
     "flow": "flow"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aphrodite": "^1.2.1",
     "immutable": "^3.8.1",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
@@ -19,8 +20,11 @@
     "react-motion": "^0.5.0",
     "react-navigation": "^1.0.0-beta.11",
     "react-redux": "^5.0.5",
+    "react-ripples": "^0.4.0",
     "redux": "^3.6.0",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "regenerator-runtime": "^0.10.5",
+    "store2": "^2.5.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.1",

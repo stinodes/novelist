@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react'
+import API from '../api/API'
 
 class LaunchScreen extends Component {
   render() {

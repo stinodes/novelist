@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 const NavView = ({ navigation, router }: { navigation: any, router: any }) => {
   const { state } = navigation;
-  const Component = router.getComponentForState(state);
+  const Component = router.getComponentForState(state)
   return (
     <Component
       navigation={addNavigationHelpers({
