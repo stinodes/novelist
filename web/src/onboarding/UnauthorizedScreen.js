@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, css } from 'aphrodite'
 import { NavigationActions } from 'react-navigation'
-import { Header, Button, View } from '../views'
+import { Header, Button, View, Screen } from '../views'
 
 class UnauthorizedScreen extends Component {
 
@@ -33,8 +33,7 @@ class UnauthorizedScreen extends Component {
 
   render() {
     return (
-      <View
-        style={styles.screen}>
+      <Screen>
         <Header
           style={styles.underLined}>
           Unauthorized.
@@ -65,17 +64,12 @@ class UnauthorizedScreen extends Component {
         </View>
 
         <View/>
-      </View>
+      </Screen>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-  },
   underLined: {
     borderBottomWidth: 2,
     borderBottomColor: '#212121',

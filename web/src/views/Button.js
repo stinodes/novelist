@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import { StyleSheet, css } from 'aphrodite'
+import View from './View'
 import Ripple from './RippleWrapper'
 import type { RippleProps } from './RippleWrapper'
 import Text from './Text'
@@ -11,9 +12,11 @@ export type ButtonProps = {
   children : string|Object,
   style? : Array<*>|Object,
   size? : Sizes,
+  wrapperStyle? : Array<Object>|Object,
   textStyle? : Array<Object>|Object,
   textSize? : Sizes,
   filled? : boolean,
+  text? : boolean,
   textProps? : TextProps,
   rippleProps? : RippleProps,
 }
@@ -33,57 +36,77 @@ const Button = (props : ButtonProps) => {
     textProps : TextProps = props.textProps || {},
     rippleProps : RippleProps = props.rippleProps || {}
 
-  if (!props.filled) {
-    textProps.bold = textProps.bold || false
-  }
+  let children
+
+  if (!props.filled)
+    textProps.weight = textProps.weight || 'bold'
+
   if (rippleProps.color === 'random')
     rippleProps.color = randomColors[Math.floor( Math.random() * randomColors.length )]
 
+  if (props.text)
+    children = (
+      <Text
+        bold={true}
+        size={textSize}
+        style={[styles.buttonText, props.textStyle]}
+        {...textProps}>
+        {props.children}
+      </Text>
+    )
+  else
+    children = props.children
+
   return (
-    <div>
-      <Ripple
-        during={rippleProps.during}
-        color={rippleProps.color}
-        onPress={props.onPress}>
-        <a
-          onMouseUp={props.onPress}
-          onTouchEnd={props.onPress}
-          className={css(
-            styles.buttonAnchor,
-            props.style,
-            styles[size],
-            !props.filled && styles.textButton,
-          )}>
-          <Text
-            bold={true}
-            size={textSize}
-            style={[styles.buttonText, props.textStyle]}
-            {...textProps}>
-            {props.children}
-          </Text>
-        </a>
-      </Ripple>
-    </div>
+    <Ripple
+      style={[styles.wrapper, props.wrapperStyle]}
+      during={rippleProps.during}
+      color={rippleProps.color}
+      borderless={rippleProps.borderless}>
+      <a
+        onMouseUp={props.onPress}
+        onTouchEnd={props.onPress}
+        className={css(
+          styles.buttonAnchor,
+          styles[size],
+          props.filled && styles.filledButton,
+          props.text && styles.textButton,
+          props.style,
+        )}>
+        {children}
+      </a>
+    </Ripple>
   )
 }
 
 const styles = StyleSheet.create({
+  wrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'stretch',
+  },
   buttonAnchor: {
     display: 'flex',
-    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 2,
-    borderWidth: 2,
-    borderColor: '#212121',
-    borderStyle: 'solid',
     paddingTop: 8,
     paddingBottom: 8,
     paddingLeft: 16,
     paddingRight: 16,
     overflow: 'hidden',
+    borderWidth: 2,
   },
   textButton: {
     border: 'none',
+    borderWidth: 0,
     borderRadius: 10,
+  },
+  filledButton: {
+    borderColor: '#212121',
+    borderStyle: 'solid',
+    backgroundColor: 'white',
+    borderWidth: 2,
   },
   tiny: {
     paddingTop: 6,
@@ -135,6 +158,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#212121',
+    textAlign: 'center',
   }
 })
 

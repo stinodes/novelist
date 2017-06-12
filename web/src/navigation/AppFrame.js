@@ -11,15 +11,12 @@ class AppFrame extends Component {
       <View
         style={styles.background}>
 
-        <View
-          style={styles.appFrame}>
           <Component
             navigation={addNavigationHelpers({
               ...this.props.navigation,
               state: state.routes[state.index],
             })}
           />
-        </View>
 
       </View>
     )
@@ -32,10 +29,10 @@ const styles = StyleSheet.create({
     position: 'fixed',
     top: 0, left: 0, bottom: 0, right: 0,
     display: 'flex',
-    alignItems: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   appFrame: {
-    backgroundColor: 'white',
     flex: 1,
     margin: 20,
     padding: 20,

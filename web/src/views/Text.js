@@ -1,14 +1,16 @@
 // @flow
 import React from 'react'
 import { StyleSheet, css } from 'aphrodite'
+import { CormorantGaramondLight, CormorantGaramond, CormorantGaramondMedium, CormorantGaramondBold } from '../fonts'
 
 export type Sizes = 'tiny'|'small'|'medium'|'large'|'huge'|'yuge'
+export type Weights = 'light'|'regular'|'medium'|'bold'
 
 export type TextProps = {
   style? : Array<*>|Object,
+  inlineStyle? : Object,
   size? : Sizes,
-  italic? : boolean,
-  bold? : boolean,
+  weight? : Weights,
   children? : string|Object,
 }
 
@@ -19,19 +21,19 @@ const Text = (props : TextProps) => {
         styles.text,
         props.style,
         props.size && styles[props.size],
-        props.italic && styles.italic,
-        props.bold && styles.bold,
-      )}>
+        styles[`${props.weight || 'regular'}Weight`],
+      )}
+      style={props.inlineStyle}>
       {props.children}
     </p>
   )
 }
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   text: {
-    fontFamily: 'sans-serif',
+    fontFamily: [CormorantGaramond, 'sans-serif'],
     fontSize: 16,
-    color: '#212121',
+    color: 'black',
     margin: 0,
     padding: 0,
   },
@@ -53,12 +55,15 @@ const styles = StyleSheet.create({
   yuge: {
     fontSize: 34,
   },
-  bold: {
-    fontWeight: 'bold',
+  lightWeight: {
+    fontFamily: [CormorantGaramondLight, 'sans-serif'],
   },
-  italic: {
-    fontStyle: 'italic',
-  }
+  mediumWeight: {
+    fontFamily: [CormorantGaramondMedium, 'sans-serif'],
+  },
+  boldWeight: {
+    fontFamily: [CormorantGaramondBold, 'sans-serif'],
+  },
 })
 
 export default Text

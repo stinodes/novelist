@@ -4,8 +4,8 @@
   "description": "Web interface for novelist project",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --public 192.168.1.99:3000",
-    "prod": "webpack-dev-server -p --public 192.168.1.99:3000",
+    "start": "webpack-dev-server --public 192.168.1.71:3000",
+    "prod": "webpack-dev-server -p --public 192.168.1.71:3000",
     "build": "NODE_ENV=production webpack -p",
     "flow": "flow"
   },
@@ -17,6 +17,7 @@
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-measure": "^2.0.2",
     "react-motion": "^0.5.0",
     "react-navigation": "^1.0.0-beta.11",
     "react-redux": "^5.0.5",

@@ -7,4 +7,4 @@
 [libs]
 
 [options]
-module.name_mapper='^react-navigation$' -> 'emptyObject'
+module.name_mapper='react-navigation' -> 'emptyObject'

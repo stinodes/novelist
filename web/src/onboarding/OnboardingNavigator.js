@@ -1,10 +1,11 @@
 import React from 'react'
 import Navigator from '../navigation/Navigator'
 import UnauthorizedScreen from './UnauthorizedScreen'
+import LoginScreen from './LoginScreen'
 
 const OnboardingNavigator = Navigator(
   {
-    Login: { screen: () => <div>login</div>, path: 'login'},
+    Login: { screen: LoginScreen, path: 'login'},
     Unauthorized: { screen: UnauthorizedScreen, path: 'unauthorized' },
   }
 )

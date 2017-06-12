@@ -4,15 +4,20 @@ import { StyleSheet, css } from 'aphrodite'
 
 export type ViewProps = {
   children? : string|Object,
-  style? : Array<*>|Object
+  style? : Array<*>|Object,
+  extraProps? : Object,
 }
 
-const View = (props : ViewProps) => (
-  <div
-    className={css(styles.view, props.style)}>
-    {props.children}
-  </div>
-)
+const View = (props : ViewProps) => {
+  const extraProps = props.extraProps || {}
+  return (
+    <div
+      {...extraProps}
+      className={css(styles.view, props.style)}>
+      {props.children}
+    </div>
+  )
+}
 
 const styles = StyleSheet.create({
   view: {
