@@ -99,9 +99,13 @@ class Ripples extends PureComponent {
     }
 
     const { onClick, color, during } = this.props
-    const {
-      pageX, pageY, currentTarget
-    } = ev
+
+    const {pageX, pageY } =
+      ev.type === 'touchend' ?
+        (ev : any).changedTouches[0] :
+        ev
+    const currentTarget = ev.currentTarget
+
     const position = this.getPos(currentTarget)
 
     const left = pageX - position.left
@@ -140,7 +144,13 @@ class Ripples extends PureComponent {
     const { state, handleClick } = this
 
     return (
-      <div {...props} className={css(styles.wrapStyle, style, borderless && styles.borderless)} onClick={handleClick}>
+      <div {...props}
+           className={css(styles.wrapStyle, style, borderless && styles.borderless)}
+           onMouseUp={handleClick}
+           onTouchEnd={e => {
+             e.preventDefault()
+             handleClick(e)
+           }}>
         { children }
         <s
           // className={css(styles.rippleStyle)}

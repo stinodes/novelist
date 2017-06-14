@@ -9,6 +9,7 @@ export type Weights = 'light'|'regular'|'medium'|'bold'
 export type TextProps = {
   style? : Array<*>|Object,
   inlineStyle? : Object,
+  inline? : boolean,
   size? : Sizes,
   weight? : Weights,
   children? : string|Object,
@@ -22,6 +23,7 @@ const Text = (props : TextProps) => {
         props.style,
         props.size && styles[props.size],
         styles[`${props.weight || 'regular'}Weight`],
+        props.inline && styles.inline,
       )}
       style={props.inlineStyle}>
       {props.children}
@@ -64,6 +66,9 @@ export const styles = StyleSheet.create({
   boldWeight: {
     fontFamily: [CormorantGaramondBold, 'sans-serif'],
   },
+  inline: {
+    display: 'inline',
+  }
 })
 
 export default Text

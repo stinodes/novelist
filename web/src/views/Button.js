@@ -8,12 +8,13 @@ import Text from './Text'
 import type { Sizes, TextProps } from './Text'
 
 export type ButtonProps = {
-  onPress : () => void,
+  onPress : (Event) => void,
   children : string|Object,
+  anchorStyle? : Array<*>|Object,
   style? : Array<*>|Object,
   size? : Sizes,
-  wrapperStyle? : Array<Object>|Object,
-  textStyle? : Array<Object>|Object,
+  wrapperStyle? : Array<*>|Object,
+  textStyle? : Array<*>|Object,
   textSize? : Sizes,
   filled? : boolean,
   text? : boolean,
@@ -55,23 +56,26 @@ const Button = (props : ButtonProps) => {
       </Text>
     )
   else
-    children = props.children
+    children = (<div>{props.children}</div>)
 
   return (
     <Ripple
-      style={[styles.wrapper, props.wrapperStyle]}
+      style={[styles.wrapper, props.style]}
       during={rippleProps.during}
       color={rippleProps.color}
-      borderless={rippleProps.borderless}>
+      borderless={props.filled ? false : props.text || rippleProps.borderless}>
       <a
         onMouseUp={props.onPress}
-        onTouchEnd={props.onPress}
+        onTouchEnd={(e) => {
+          e.preventDefault()
+          props.onPress(e)
+        }}
         className={css(
           styles.buttonAnchor,
           styles[size],
-          props.filled && styles.filledButton,
-          props.text && styles.textButton,
-          props.style,
+          props.anchorStyle,
+          props.filled && styles.filledButtonAnchor,
+          props.text && styles.textButtonAnchor,
         )}>
         {children}
       </a>
@@ -97,16 +101,14 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderWidth: 2,
   },
-  textButton: {
+  textButtonAnchor: {
     border: 'none',
     borderWidth: 0,
     borderRadius: 10,
   },
-  filledButton: {
-    borderColor: '#212121',
-    borderStyle: 'solid',
-    backgroundColor: 'white',
-    borderWidth: 2,
+  filledButtonAnchor: {
+    alignSelf: 'stretch',
+    flex: 1,
   },
   tiny: {
     paddingTop: 6,

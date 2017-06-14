@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react'
+// $FlowFixMe
 import { NavigationActions } from 'react-navigation'
 import API from '../api/API'
 

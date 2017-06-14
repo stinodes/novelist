@@ -9,10 +9,11 @@ import { styles as textStyles } from './Text'
 import type { Sizes, Weights } from './Text'
 
 export type TextInputProps = {
-  onChange : (Event) => void,
-  onFocus? : () => void,
-  onBlur? : () => void,
+  onChange : (Event) => any,
+  onFocus? : () => any,
+  onBlur? : () => any,
   value : string,
+  inline ? : boolean,
   size? : Sizes,
   weight? : Weights,
   style? : Array<*>|Object,
@@ -49,6 +50,7 @@ class TextInput extends Component {
       textStyle,
       weight,
       size,
+      inline,
       onChange,
       value,
       isSecure,
@@ -64,7 +66,8 @@ class TextInput extends Component {
           during: 750,
         }}
         onPress={this.onPress}
-        style={[styles.wrapper, style]}>
+        anchorStyle={[styles.anchor]}
+        style={[styles.wrapper, style, inline && styles.inlineWrapper]}>
         <Motion
           style={{
             y: spring((this.state.focused || value) ? 0 : 100, this.springConfig ),
@@ -118,8 +121,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
     borderBottomColor: 'black',
     borderBottomStyle: 'solid',
-    marginTop: 10,
+    marginTop: 20,
     borderRadius: 0,
+  },
+  inlineWrapper: {
+    display: 'inline-block',
   },
   label: {
     color: '#757575',
@@ -134,6 +140,9 @@ const styles = StyleSheet.create({
     border: 'none',
     textAlign: 'center',
     marginTop: 0,
+  },
+  anchor: {
+    padding: 0,
   },
 })
 

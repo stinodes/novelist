@@ -5,7 +5,8 @@ import { StyleSheet, css } from 'aphrodite'
 export type ViewProps = {
   children? : string|Object,
   style? : Array<*>|Object,
-  extraProps? : Object,
+  inlineStyle? : Object,
+  extraProps? : false|?Object,
 }
 
 const View = (props : ViewProps) => {
@@ -13,6 +14,7 @@ const View = (props : ViewProps) => {
   return (
     <div
       {...extraProps}
+      style={props.inlineStyle}
       className={css(styles.view, props.style)}>
       {props.children}
     </div>
