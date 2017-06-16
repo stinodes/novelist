@@ -15,7 +15,7 @@ import Measure from 'react-measure'
 // $FlowFixMe
 import { NavigationActions } from 'react-navigation'
 
-import type { Navigation } from '../flow/types'
+import type { Navigation } from 'novelist-common'
 
 import API from '../api/API'
 import User from '../api/User'

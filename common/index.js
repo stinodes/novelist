@@ -7,3 +7,4 @@ export {
   NavigationWeb,
   util,
 }
+export * as types from './src/flow/types'

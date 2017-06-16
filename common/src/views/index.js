@@ -1,7 +1,6 @@
 // @flow
 export { default as AuthScreen } from './AuthScreen'
 export { default as View } from './View'
-export { default as MeasurableView } from './MeasurableView'
 export { default as Screen } from './Screen'
 export { default as Header } from './Header'
 export { default as Text } from './Text'
