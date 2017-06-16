@@ -8,3 +8,4 @@
 
 [options]
 module.name_mapper='react-navigation' -> 'emptyObject'
+esproposal.export_star_as=enable
