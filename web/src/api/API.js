@@ -16,8 +16,8 @@ class API {
     return !!this.currentUserId
   }
 
-  static async register(user : User) : Promise<User> {
-    if (this.getUser(user.id))
+  static async register(user : User) : Promise<User|false> {
+    if (await this.getUser(user.id))
       throw new CustomError(
         'UserError',
         'This user has already been created',
@@ -26,9 +26,9 @@ class API {
 
     this.local(
       'users',
-      (arr = []) => {
-        const newArr = arr
-        newArr.push(user)
+      (arr  : Array<RawUser>) : Array<RawUser> => {
+        const newArr = arr ? [...arr] : []
+        newArr.push(user.toRaw())
         return newArr
       }
     )
@@ -38,7 +38,12 @@ class API {
 
   static async logIn(username : string, password : string) {
     const userToLogIn = await this.getUserForUsername(username)
-
+    if (!userToLogIn)
+      throw new CustomError(
+        'UserError',
+        'Not Found',
+        'UserNotFound',
+      )
     if (!userToLogIn.matchesPasswords(password))
       throw new CustomError(
         'UserError',
@@ -63,15 +68,15 @@ class API {
     return this.getUser(this.local('currentUser'))
   }
 
-  static async getUser(id : string) : Promise<User> {
+  static async getUser(id : string) : Promise<User|false> {
     return User.fromRaw(
-      this.local('users')
+      (this.local('users') || [])
         .find( (user : RawUser) => user.id === id )
     )
   }
-  static async getUserForUsername(username : string) : Promise<User> {
+  static async getUserForUsername(username : string) : Promise<User|false> {
     return User.fromRaw(
-      this.local('users')
+      (this.local('users') || [])
         .find( (user : RawUser) => user.username === username )
     )
   }

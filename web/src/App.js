@@ -3,9 +3,8 @@ import {
   createNavigator,
   TabRouter,
 } from 'react-navigation'
-import AppFrame from './navigation/AppFrame'
-import BrowserAppContainer from './navigation/BrowserAppContainer'
-import Navigator from './navigation/Navigator'
+import { NavigationWeb } from 'novelist-common'
+const { AppFrame, BrowserAppContainer } = NavigationWeb
 
 import LaunchScreen from './launch/LaunchScreen'
 import OnboardingNavigator from './onboarding/OnboardingNavigator'

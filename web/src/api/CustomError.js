@@ -3,12 +3,13 @@ export type ErrorType =
   'StoreError' |
   'UserError'
 
-export type ErrorCode = 'NoUser' | 'UserAlreadyExists' | 'WrongCredentials'
+export type ErrorCode = 'NoUser' | 'UserNotFound' | 'UserAlreadyExists' | 'WrongCredentials'
 
 export const ErrorCodes = {
   'UserAlreadyExists': 400,
   'WrongCredentials': 401,
   'NoUser': 401,
+  'UserNotFound': 404,
 }
 
 class CustomError extends Error {

@@ -4,22 +4,22 @@ import CONFIG from '../config'
 
 export type RawUser = {
   id : ?string,
-  email : string,
+  email? : ?string,
   username : string,
   hashedPassword : string,
-  firstName : string,
-  lastName : string,
-  createdAt : ?number,
+  firstName? : ?string,
+  lastName? : ?string,
+  createdAt? : number,
 }
 
 class User {
 
   id : string
-  email : string
+  email : ?string
   username : string
   hashedPassword : string
-  firstName : string
-  lastName : string
+  firstName : ?string
+  lastName : ?string
   createdAt : number
 
   constructor(userData : RawUser) {
@@ -38,20 +38,27 @@ class User {
     return this.hashedPassword === User.hashPassword(rawPassword)
   }
 
+  toRaw() : RawUser {
+    const { id, email, username, hashedPassword, firstName, lastName, createdAt } = this
+    return { id, email, username, hashedPassword, firstName, lastName, createdAt }
+  }
+
   static hashPassword(password : string) {
     return murmur(password, CONFIG.seed)
   }
 
-  static fromRaw(userData : RawUser) {
+  static fromRaw(userData : ?RawUser) {
+    if (!userData)
+      return false
     return new User(userData)
   }
 
   static createNewUser(userData : {
     username : string,
-    email : string,
+    email? : string,
     rawPassword : string,
-    firstName : string,
-    lastName : string,
+    firstName? : string,
+    lastName? : string,
   }) {
     const hashedPassword = this.hashPassword(userData.rawPassword),
       id = murmur(userData.username, Date.now()),

@@ -62,7 +62,7 @@ module.exports = {
       },
       {
         test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
+        exclude: /node_modules\/(?!(novelist-common)\/?).*/,
         use: [
           'babel-loader'
         ],

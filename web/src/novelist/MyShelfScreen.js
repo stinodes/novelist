@@ -2,13 +2,11 @@
 import React from 'react'
 import {
   AuthScreen,
-} from '../views'
+} from 'novelist-common'
+// $FlowFixMe
+import { NavigationActions } from 'react-navigation'
 
 class MyShelfScreen extends AuthScreen {
-
-  componentDidMount() {
-    super.componentDidMount()
-  }
 
   render() {
     return (

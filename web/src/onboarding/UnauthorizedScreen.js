@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { StyleSheet, css } from 'aphrodite'
 // $FlowFixMe
 import { NavigationActions } from 'react-navigation'
-import { Header, Button, View, Screen } from '../views'
+import { Header, Button, View, Screen } from 'novelist-common'
 
 class UnauthorizedScreen extends Component {
 

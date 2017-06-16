@@ -14,7 +14,7 @@ class LaunchScreen extends Component {
         </a>
         <br/>
         <a
-          onClick={() => this.props.navigation.navigate('Home')}>
+          onClick={() => this.props.navigation.navigate('Novelist')}>
           home
         </a>
       </div>

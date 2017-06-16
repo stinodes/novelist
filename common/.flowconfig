@@ -1,0 +1,10 @@
+[ignore]
+.*/node_modules/react-navigation/.*
+.*/node_modules/react-native-tab-view/.*
+
+[include]
+
+[libs]
+
+[options]
+module.name_mapper='react-navigation' -> 'emptyObject'

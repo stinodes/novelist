@@ -1,6 +1,5 @@
 import React from 'react'
 import { addNavigationHelpers, TabRouter, createNavigator } from 'react-navigation'
-import PropTypes from 'prop-types'
 
 const NavView = ({ navigation, router }: { navigation: any, router: any }) => {
   const { state } = navigation;

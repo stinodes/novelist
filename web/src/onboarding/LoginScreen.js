@@ -8,11 +8,17 @@ import {
   Button,
   Header,
   Text,
-} from '../views'
+  util,
+} from 'novelist-common'
 import { Motion, spring } from 'react-motion'
 import Measure from 'react-measure'
+// $FlowFixMe
+import { NavigationActions } from 'react-navigation'
 
 import type { Navigation } from '../flow/types'
+
+import API from '../api/API'
+import User from '../api/User'
 
 class LoginScreen extends Component {
 
@@ -67,14 +73,61 @@ class LoginScreen extends Component {
 
   login = () => {
     const { username, passwordLogin } = this.state
-    if (username && passwordLogin)
-      setTimeout( () => this.setState({loading: true}), 150)
+    if (username && passwordLogin) {
+      this.setState({loading: true})
+      API.logIn(username, passwordLogin)
+        .catch(console.error)
+        .then((user) => this.stopLoading(user))
+        .then(
+          (user) => {
+            console.log('user=', user)
+            user && this.props.navigation.dispatch(
+              NavigationActions.navigate({
+                routeName: 'Novelist',
+                params: {user,}
+              })
+            )
+          }
+        )
+        .catch(console.error)
+    }
   }
   register = () => {
     const { username, passwordRegister, confirmPasswordRegister } = this.state
-    if (username && passwordRegister && confirmPasswordRegister)
-      setTimeout( () => this.setState({loading: true}), 150)
+    if (username && passwordRegister && confirmPasswordRegister && passwordRegister === confirmPasswordRegister) {
+      this.setState({loading: true})
+      API.register(
+        User.createNewUser({
+          username: username,
+          rawPassword: passwordRegister,
+        })
+      )
+        .catch((e) => {
+          console.error(e)
+          return false
+        })
+        .then((user) => this.stopLoading(user))
+        .then(
+          (user) => {
+            console.log('user=', user)
+            user && this.props.navigation.dispatch(
+              NavigationActions.navigate({
+                routeName: 'Novelist',
+                params: {user,}
+              })
+            )
+          }
+        )
+    }
   }
+
+  stopLoading = <T>(valToReturn : T) : Promise<T> =>
+    util.TimeoutPromise(4000)
+      .then(() => this.setState({loading: false}))
+      .then(() => {
+        console.log('returning=', valToReturn)
+        return valToReturn
+      })
 
   render() {
     const { loading, mode } = this.state
@@ -270,7 +323,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flexDirection: 'column',
     justifyContent: 'center',
-    padding: '45px 90px',
+    padding: '45px 60px',
     paddingTop: 0,
     boxShadow: 'rgba(0, 0, 0, 0.2) 2px 3px 15px',
     zIndex: 1,

@@ -7,7 +7,8 @@
     "start": "webpack-dev-server --public 192.168.1.71:3000",
     "prod": "webpack-dev-server -p --public 192.168.1.71:3000",
     "build": "NODE_ENV=production webpack -p",
-    "flow": "flow"
+    "flow": "flow",
+    "link-common": "cd ../common && npm link && cd ../web && npm link novelist-common"
   },
   "author": "",
   "license": "ISC",
